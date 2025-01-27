@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { restData } from "../data.js";
 import Header from "./components/Header.jsx";
 import Restaurent from "./components/RestaurentCard.jsx";
+import AppBody from "./components/AppBody.jsx";
 
 // A) html through react
 // <div id="parent">
@@ -51,18 +52,9 @@ const parent = React.createElement("div", { id: "parent" }, [
   ]),
 ]);
 
-const RestaurentList = () => (
-  <div className="restaurentList">
-    {restData &&
-      restData.map((res, i) => <Restaurent key={res.info.id} restData={res} />)}
-  </div>
-);
 
-const AppBody = () => (
-    <div className="appbody">
-      <RestaurentList />
-    </div>
-  );
+
+
 
 const AppLayout = () => (
   <div>
