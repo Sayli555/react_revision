@@ -1,0 +1,31 @@
+{
+  "name": "ecomerce",
+  "version": "1.0.0",
+  "description": "creating E-commerce project for refreshment",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sayli555/react_revision.git"
+  },
+  "author": "sayli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sayli555/react_revision/issues"
+  },
+  "homepage": "https://github.com/Sayli555/react_revision#readme",
+  "devDependencies": {
+    "parcel": "^2.13.3",
+    "process": "^0.11.10"
+  },
+  "browsersList": [
+    "last 2 vesrions"
+  ],
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
