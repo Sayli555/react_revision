@@ -1,6 +1,7 @@
 import Restaurent from "./RestaurentCard";
 import { restData } from "../../data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer/Shimmer";
 
 const RestaurentList = ({ restData }) => (
   <div className="restaurentList">
@@ -10,22 +11,44 @@ const RestaurentList = ({ restData }) => (
 );
 
 const AppBody = () => {
-  [listOfRestaurent, setListOfRestaurent] = useState(restData);
+  [listOfRestaurent, setListOfRestaurent] = useState([]);
 
-  return (
+  const fetchData = async () => {
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.99740&lng=79.00110&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const json = await data.json();
+      setListOfRestaurent(
+        json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      console.log("data", json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return listOfRestaurent?.length == 0 ? (
+    <Shimmer />
+  ) : (
     <div className="appbody">
       <div>
         <button
           onClick={() => {
-            const filterData = restData.filter((ele) => ele.info.avgRating > 4.6);
+            const filterData = listOfRestaurent?.filter(
+              (ele) => ele.info.avgRating > 4
+            );
             setListOfRestaurent(filterData);
-
           }}
         >
           Top Rated Restaurent
         </button>
       </div>
-      <RestaurentList restData={listOfRestaurent} />
+      <RestaurentList  restData={listOfRestaurent} />
     </div>
   );
 };
