@@ -11,7 +11,10 @@ const RestaurentList = ({ restData }) => (
 );
 
 const AppBody = () => {
-  [listOfRestaurent, setListOfRestaurent] = useState([]);
+  const [listOfRestaurent, setListOfRestaurent] = useState([]);
+  const [filterdata,setFilterData]=useState([])
+  const [seachquery,setseachquery]=useState([])
+
 
   const fetchData = async () => {
     try {
@@ -20,6 +23,10 @@ const AppBody = () => {
       );
       const json = await data.json();
       setListOfRestaurent(
+        json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setFilterData(
         json?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
       );
@@ -37,6 +44,15 @@ const AppBody = () => {
   ) : (
     <div className="appbody">
       <div>
+      <div>
+        <input value={seachquery} type="text" placeholder="add query to search" onChange={(e)=>setseachquery(e.target.value)} />
+        <button onClick={()=>{
+          const filterData=listOfRestaurent.filter((ele)=>ele?.info?.name?.toLowerCase().includes(seachquery.toLowerCase()))
+          setFilterData(filterData)
+          console.log(filterData)
+
+        }}>search</button>
+      </div>
         <button
           onClick={() => {
             const filterData = listOfRestaurent?.filter(
@@ -48,7 +64,7 @@ const AppBody = () => {
           Top Rated Restaurent
         </button>
       </div>
-      <RestaurentList  restData={listOfRestaurent} />
+      <RestaurentList  restData={filterdata} />
     </div>
   );
 };
