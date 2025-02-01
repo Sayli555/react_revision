@@ -1,9 +1,14 @@
-import React from "react";
+import React, { Children } from "react";
 import ReactDOM from "react-dom/client";
 import { restData } from "../data.js";
 import Header from "./components/Header.jsx";
 import Restaurent from "./components/RestaurentCard.jsx";
 import AppBody from "./components/AppBody.jsx";
+import Shimmer from "./components/Shimmer/Shimmer.jsx";
+import {createBrowserRouter,RouterProvider,Outlet} from "react-router"
+import About from "./components/About.jsx";
+import ContactUs from "./components/ContactUs.jsx";
+import Cart from "./components/Cart.jsx";
 
 // A) html through react
 // <div id="parent">
@@ -52,20 +57,42 @@ const parent = React.createElement("div", { id: "parent" }, [
   ]),
 ]);
 
-
-
-
-
 const AppLayout = () => (
   <div>
     <Header />
-    <AppBody />
+    <Outlet />
   </div>
 );
+
+const appRoute = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    errorElement: <h1>Error</h1>,
+    children:[
+      {
+        path:"/",
+        element:<AppBody/>
+      },
+      {
+        path:"/about",
+        element:<About/>
+      },
+      {
+        path:"/contact-us",
+        element:<ContactUs/>
+      },
+      {
+        path:"/cart",
+        element:<Cart/>
+      },
+    ]
+  },
+]);
 
 // const heading = React.createElement("h1", {}, "Revison of react");
 
 // const Headinding = <h1>Revison start</h1>;
 
 const root = ReactDOM.createRoot(document.querySelector("body"));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRoute} />);

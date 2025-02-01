@@ -58,7 +58,7 @@ const AppBody = () => {
             const filterData = listOfRestaurent?.filter(
               (ele) => ele.info.avgRating > 4
             );
-            setListOfRestaurent(filterData);
+            setFilterData(filterData);
           }}
         >
           Top Rated Restaurent
